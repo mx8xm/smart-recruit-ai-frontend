@@ -41,6 +41,12 @@ npm run tauri:build
 This desktop build will call your local backend on `localhost:8000`.
 If you download this app later from GitHub, it will still work as long as your backend is running locally on the same machine.
 
+Important:
+
+- `localhost` inside the desktop app means the user's own computer
+- it does not mean GitHub's machine
+- it does not mean the Choreo server
+
 2. Web build or desktop build for deployed backend
 
 Use:

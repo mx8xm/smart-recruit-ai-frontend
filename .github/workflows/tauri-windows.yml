@@ -13,6 +13,8 @@ jobs:
     runs-on: windows-latest
     permissions:
       contents: write
+    env:
+      VITE_API_BASE_URL: http://localhost:8000
 
     steps:
       - name: Checkout
