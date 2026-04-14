@@ -1,0 +1,73 @@
+name: Tauri Windows Build
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build Tauri bundles for workflow artifacts
+        if: "!startsWith(github.ref, 'refs/tags/')"
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: --bundles nsis,msi
+          uploadWorkflowArtifacts: true
+
+      - name: Build Tauri bundles for GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: --bundles nsis,msi
+          uploadWorkflowArtifacts: true
+          tagName: ${{ github.ref_name }}
+          releaseName: Smart Recruit AI ${{ github.ref_name }}
+          releaseBody: Windows installers for Smart Recruit AI.
+          releaseDraft: false
+          prerelease: false
+
+      - name: Build portable zip
+        shell: powershell
+        run: |
+          $portableDir = "src-tauri/target/release/portable"
+          New-Item -ItemType Directory -Path $portableDir -Force | Out-Null
+          Compress-Archive -Path "src-tauri/target/release/app.exe" -DestinationPath "$portableDir/smart-recruit-ai-portable-windows.zip" -Force
+
+      - name: Upload portable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: smart-recruit-ai-portable-windows
+          path: src-tauri/target/release/portable/smart-recruit-ai-portable-windows.zip
+
+      - name: Upload portable asset to release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: src-tauri/target/release/portable/smart-recruit-ai-portable-windows.zip

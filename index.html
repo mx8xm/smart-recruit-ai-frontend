@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      (function () {
+        try {
+          const saved = localStorage.getItem("theme");
+          const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const theme = saved || (systemDark ? "dark" : "light");
+          document.documentElement.classList.toggle("dark", theme === "dark");
+        } catch (_) {}
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Recruit AI</title>
+  </head>
+  <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased overflow-y-scroll">
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>

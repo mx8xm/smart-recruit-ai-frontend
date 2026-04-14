@@ -1,0 +1,164 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #009cdc;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0c4a6e;
+  --color-primary-950: #082f49;
+
+  --color-slate-850: #1e293b;
+
+  --animate-fade-in: fadeIn 0.5s ease-out;
+  --animate-slide-up: slideUp 0.5s ease-out;
+  --animate-pulse-slow: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes slideUp {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+}
+
+.disable-theme-transitions *,
+.disable-theme-transitions *::before,
+.disable-theme-transitions *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+button,
+a,
+input,
+select,
+textarea,
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px transparent;
+}
+
+input:-webkit-autofill {
+    -webkit-text-fill-color: #0f172a !important;
+}
+
+.dark input:-webkit-autofill {
+    -webkit-text-fill-color: #f8fafc !important;
+}
+
+/* --- NEW LOADER (Uiverse.io by david-mohseni) --- */
+.loader {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.loader div {
+  width: 8%;
+  height: 24%;
+  background: currentColor; /* Use currentColor to adapt to text color */
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  opacity: 0;
+  border-radius: 50px;
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+  animation: fade458 1s linear infinite;
+}
+
+@keyframes fade458 {
+  from { opacity: 1; }
+  to { opacity: 0.25; }
+}
+
+.loader .bar1 { transform: rotate(0deg) translate(0, -130%); animation-delay: 0s; }
+.loader .bar2 { transform: rotate(30deg) translate(0, -130%); animation-delay: -1.1s; }
+.loader .bar3 { transform: rotate(60deg) translate(0, -130%); animation-delay: -1s; }
+.loader .bar4 { transform: rotate(90deg) translate(0, -130%); animation-delay: -0.9s; }
+.loader .bar5 { transform: rotate(120deg) translate(0, -130%); animation-delay: -0.8s; }
+.loader .bar6 { transform: rotate(150deg) translate(0, -130%); animation-delay: -0.7s; }
+.loader .bar7 { transform: rotate(180deg) translate(0, -130%); animation-delay: -0.6s; }
+.loader .bar8 { transform: rotate(210deg) translate(0, -130%); animation-delay: -0.5s; }
+.loader .bar9 { transform: rotate(240deg) translate(0, -130%); animation-delay: -0.4s; }
+.loader .bar10 { transform: rotate(270deg) translate(0, -130%); animation-delay: -0.3s; }
+.loader .bar11 { transform: rotate(300deg) translate(0, -130%); animation-delay: -0.2s; }
+.loader .bar12 { transform: rotate(330deg) translate(0, -130%); animation-delay: -0.1s; }
+
+
+/* --- View Transitions API (Updated for One-Piece Effect) --- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Base z-index logic for smooth circular transition */
+::view-transition-old(root),
+.dark::view-transition-new(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root),
+.dark::view-transition-old(root) {
+  z-index: 9999;
+}
