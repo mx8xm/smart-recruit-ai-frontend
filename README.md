@@ -6,15 +6,19 @@ React + Vite + Tauri frontend for Smart Recruit AI.
 
 ```bash
 npm install
-cp .env.example .env
 npm run dev
 ```
 
-Local backend default:
+Use this env for local backend:
 
 ```env
 VITE_API_BASE_URL=http://localhost:8000
 ```
+
+Files included:
+
+- `.env.local.example` for local backend
+- `.env.web.example` for deployed backend
 
 ## Production Web Build
 
@@ -23,6 +27,12 @@ npm run build
 ```
 
 Set `VITE_API_BASE_URL` to your deployed backend URL before building for web.
+
+Example:
+
+```env
+VITE_API_BASE_URL=https://your-backend-url.choreoapps.dev
+```
 
 ## Tauri Desktop Build
 
